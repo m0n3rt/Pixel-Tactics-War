@@ -182,3 +182,9 @@ npm run serve
 - 像素美术资源与帧动画（走路、攻击、待机）
 - 多回合战役模式
 - 音效与 BGM
+
+---
+
+## License
+
+本项目采用 Apache License 2.0，详见 [LICENSE](LICENSE)。
