@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>像素战棋</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== 首页 ===== -->
+  <div id="title-screen">
+    <div class="title-content">
+      <div class="title-decoration">⚔</div>
+      <h1 class="game-title">像素战棋</h1>
+      <p class="subtitle">PIXEL TACTICS</p>
+      <div class="title-menu">
+        <button id="btn-start-game" class="big-btn">开始游戏</button>
+      </div>
+      <p class="tip-text">布阵 → 开战 → 摧毁敌方总部</p>
+    </div>
+  </div>
+
+  <!-- ===== 加载过渡 ===== -->
+  <div id="loading-screen" class="hidden">
+    <div class="loader-content">
+      <div class="spinner"></div>
+      <p class="loader-text">正在准备战场...</p>
+    </div>
+  </div>
+
+  <!-- ===== 回合提示横幅 ===== -->
+  <div id="round-banner" class="hidden">
+    <div class="banner-text">
+      <div class="round-number" id="round-number-text"></div>
+      <div class="round-hint">请部署你的战棋！</div>
+    </div>
+  </div>
+
+  <!-- ===== 暂停弹窗 ===== -->
+  <div id="pause-overlay" class="hidden">
+    <div class="pause-content">
+      <div class="pause-icon">⏸</div>
+      <div class="pause-label">游戏暂停</div>
+      <p class="pause-hint">按 P 或点击下方按钮继续</p>
+      <div class="pause-btns">
+        <button id="btn-resume" class="pause-btn resume-btn">▶ 继续游戏</button>
+        <button id="btn-quit" class="pause-btn quit-btn">✕ 退出游戏</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 退出确认弹窗 ===== -->
+  <div id="confirm-overlay" class="hidden">
+    <div class="confirm-box">
+      <div class="confirm-title">⚠ 确认退出</div>
+      <p class="confirm-msg">当前对局进度将丢失，确认退出到主界面吗？</p>
+      <div class="confirm-btns">
+        <button id="btn-confirm-yes" class="pause-btn quit-btn">确认退出</button>
+        <button id="btn-confirm-no" class="pause-btn resume-btn">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 游戏界面 ===== -->
+  <div id="ui-root" class="hidden">
+
+    <!-- 顶部状态栏 -->
+    <div class="top-bar">
+      <div class="hq-panel player-side">
+        <span class="hq-icon">🏰</span>
+        <div class="hq-detail">
+          <span class="hq-name">我方总部</span>
+          <span class="hq-hp-text">HP <span id="player-hq-hp" class="hp-val">100</span><span class="hp-max">/100</span></span>
+          <div class="hq-bar"><div class="hq-bar-fill player-bar" id="player-hq-bar"></div></div>
+        </div>
+      </div>
+
+      <div class="center-strip">
+        <div class="phase-badge" id="phase-badge">准备阶段</div>
+        <div class="info-row">
+          <span>回合 <strong id="round-display">1</strong></span>
+          <span class="sep">|</span>
+          <span id="countdown-wrap">⏱ <span id="countdown">60</span>s</span>
+          <span class="sep">|</span>
+          <span id="points-wrap">🪙 <span id="deploy-points">20</span></span>
+        </div>
+        <div class="army-summary" id="army-summary"></div>
+      </div>
+
+      <div class="hq-panel enemy-side">
+        <div class="hq-detail right">
+          <span class="hq-name">敌方总部</span>
+          <span class="hq-hp-text">HP <span id="enemy-hq-hp" class="hp-val">100</span><span class="hp-max">/100</span></span>
+          <div class="hq-bar"><div class="hq-bar-fill enemy-bar" id="enemy-hq-bar"></div></div>
+        </div>
+        <span class="hq-icon">🏰</span>
+      </div>
+    </div>
+
+    <!-- 主区域：画布 + 右侧日志 -->
+    <div class="game-area">
+      <canvas id="game-canvas"></canvas>
+      <div id="unit-tooltip" class="hidden"></div>
+      <div id="battle-log" class="side-log">
+        <div class="log-header">📜 战斗日志</div>
+        <div class="log-body" id="log-body"></div>
+      </div>
+    </div>
+
+    <!-- 底部控制栏 -->
+    <div class="control-bar">
+      <div class="ctrl-group deploy-group" id="deploy-controls">
+        <button data-unit="infantry" class="unit-btn"><kbd>1</kbd> 步兵<span class="cost-tag">①</span></button>
+        <button data-unit="archer"   class="unit-btn"><kbd>2</kbd> 弓手<span class="cost-tag">②</span></button>
+        <button data-unit="tank"     class="unit-btn"><kbd>3</kbd> 重甲<span class="cost-tag">③</span></button>
+      </div>
+      <div class="ctrl-sep"></div>
+      <div class="ctrl-group battle-group">
+        <button id="start-battle"  class="ctrl-btn green-btn"><kbd>Space</kbd> 开战</button>
+        <button id="btn-pause"     class="ctrl-btn amber-btn hidden"><kbd>P</kbd> 暂停</button>
+        <button id="btn-speed"     class="ctrl-btn blue-btn hidden">1×</button>
+        <button id="next-round"    class="ctrl-btn blue-btn hidden">下一局 →</button>
+        <button id="btn-play-again" class="ctrl-btn green-btn hidden">再来一局</button>
+        <button id="btn-back-title" class="ctrl-btn amber-btn hidden">主界面</button>
+      </div>
+    </div>
+
+    <!-- 底部信息区 -->
+    <div class="bottom-panel">
+      <div id="message" class="message-area"></div>
+    </div>
+
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>

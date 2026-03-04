@@ -1,0 +1,378 @@
+// 像素战棋原型
+
+const TILE_SIZE = 16; // 内部逻辑每格像素（再整体放大）
+const GRID_COLS = 10;
+const GRID_ROWS = 6;
+const SCALE = 2; // 画布缩放到更大像素风
+
+const PLAYER_SIDE = "player";
+const ENEMY_SIDE = "enemy";
+
+const INITIAL_HQ_HP = 100;
+const PREPARE_TIME = 20; // 准备阶段秒数
+const DEPLOY_POINTS_MAX = 20;
+
+const UNIT_TYPES = {
+  infantry: {
+    name: "步兵",
+    cost: 1,
+    maxHp: 10,
+    attack: 3,
+    range: 1,
+    moveSpeed: 1,
+    color: "#6cf",
+  },
+  archer: {
+    name: "弓手",
+    cost: 2,
+    maxHp: 8,
+    attack: 4,
+    range: 3,
+    moveSpeed: 1,
+    color: "#fd6",
+  },
+  tank: {
+    name: "重甲",
+    cost: 3,
+    maxHp: 20,
+    attack: 5,
+    range: 1,
+    moveSpeed: 1,
+    color: "#f77",
+  },
+};
+
+const canvas = document.getElementById("game-canvas");
+const ctx = canvas.getContext("2d");
+canvas.width = GRID_COLS * TILE_SIZE;
+canvas.height = GRID_ROWS * TILE_SIZE;
+canvas.style.width = canvas.width * SCALE + "px";
+canvas.style.height = canvas.height * SCALE + "px";
+
+ctx.imageSmoothingEnabled = false;
+
+const playerHqHpEl = document.getElementById("player-hq-hp");
+const enemyHqHpEl = document.getElementById("enemy-hq-hp");
+const countdownEl = document.getElementById("countdown");
+const deployPointsEl = document.getElementById("deploy-points");
+const messageEl = document.getElementById("message");
+
+const unitButtons = Array.from(
+  document.querySelectorAll(".unit-buttons button[data-unit]")
+);
+const startBattleBtn = document.getElementById("start-battle");
+const resetGameBtn = document.getElementById("reset-game");
+
+let gameState;
+let lastFrameTime = 0;
+let activeUnitKey = "infantry";
+
+function createInitialState() {
+  return {
+    phase: "prepare", // "prepare" | "battle" | "result"
+    countdown: PREPARE_TIME,
+    playerHqHp: INITIAL_HQ_HP,
+    enemyHqHp: INITIAL_HQ_HP,
+    deployPoints: DEPLOY_POINTS_MAX,
+    units: [],
+    winner: null,
+  };
+}
+
+function resetGame() {
+  gameState = createInitialState();
+  spawnEnemyFormation();
+  updateUi();
+}
+
+function spawnEnemyFormation() {
+  // 简单AI：随机在右侧三列放一些单位，总点数上限同玩家
+  const cols = [7, 8, 9];
+  let remaining = DEPLOY_POINTS_MAX;
+  const enemyUnits = [];
+
+  while (remaining > 0) {
+    const keys = Object.keys(UNIT_TYPES);
+    const key = keys[Math.floor(Math.random() * keys.length)];
+    const def = UNIT_TYPES[key];
+    if (def.cost > remaining) break;
+
+    const col = cols[Math.floor(Math.random() * cols.length)];
+    const row = Math.floor(Math.random() * GRID_ROWS);
+
+    if (enemyUnits.some((u) => u.col === col && u.row === row)) continue;
+
+    enemyUnits.push({
+      id: "e" + Math.random().toString(36).slice(2),
+      side: ENEMY_SIDE,
+      type: key,
+      col,
+      row,
+      hp: def.maxHp,
+    });
+    remaining -= def.cost;
+  }
+
+  gameState.units = gameState.units.filter((u) => u.side === PLAYER_SIDE);
+  gameState.units.push(...enemyUnits);
+}
+
+function setActiveUnit(unitKey) {
+  activeUnitKey = unitKey;
+  unitButtons.forEach((btn) => {
+    if (btn.dataset.unit === unitKey) btn.classList.add("active");
+    else btn.classList.remove("active");
+  });
+}
+
+unitButtons.forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const key = btn.dataset.unit;
+    if (!key) return;
+    setActiveUnit(key);
+  });
+});
+
+canvas.addEventListener("click", (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const col = Math.floor((x / rect.width) * GRID_COLS);
+  const row = Math.floor((y / rect.height) * GRID_ROWS);
+
+  handleGridClick(col, row);
+});
+
+function handleGridClick(col, row) {
+  if (gameState.phase !== "prepare") return;
+
+  // 玩家只能在左侧三列布阵
+  if (col > 2) return;
+
+  const existing = gameState.units.find(
+    (u) => u.col === col && u.row === row && u.side === PLAYER_SIDE
+  );
+
+  if (existing) {
+    // 再次点击：移除单位并返还点数
+    const def = UNIT_TYPES[existing.type];
+    gameState.deployPoints = Math.min(
+      gameState.deployPoints + def.cost,
+      DEPLOY_POINTS_MAX
+    );
+    gameState.units = gameState.units.filter((u) => u !== existing);
+  } else {
+    const def = UNIT_TYPES[activeUnitKey];
+    if (!def) return;
+    if (def.cost > gameState.deployPoints) return;
+
+    gameState.units.push({
+      id: "p" + Math.random().toString(36).slice(2),
+      side: PLAYER_SIDE,
+      type: activeUnitKey,
+      col,
+      row,
+      hp: def.maxHp,
+    });
+    gameState.deployPoints -= def.cost;
+  }
+
+  updateUi();
+}
+
+startBattleBtn.addEventListener("click", () => {
+  if (gameState.phase !== "prepare") return;
+  gameState.countdown = 0;
+  startBattle();
+});
+
+resetGameBtn.addEventListener("click", () => {
+  resetGame();
+});
+
+function startBattle() {
+  if (gameState.phase !== "prepare") return;
+  gameState.phase = "battle";
+  messageEl.textContent = "战斗进行中...";
+}
+
+function updateUi() {
+  playerHqHpEl.textContent = gameState.playerHqHp;
+  enemyHqHpEl.textContent = gameState.enemyHqHp;
+  countdownEl.textContent = Math.max(0, Math.ceil(gameState.countdown));
+  deployPointsEl.textContent = gameState.deployPoints;
+}
+
+function gameLoop(timestamp) {
+  const dt = (timestamp - lastFrameTime) / 1000;
+  lastFrameTime = timestamp;
+
+  if (!Number.isFinite(dt) || dt > 0.5) {
+    requestAnimationFrame(gameLoop);
+    return;
+  }
+
+  update(dt);
+  render();
+
+  requestAnimationFrame(gameLoop);
+}
+
+function update(dt) {
+  if (gameState.phase === "prepare") {
+    gameState.countdown -= dt;
+    if (gameState.countdown <= 0) {
+      gameState.countdown = 0;
+      startBattle();
+    }
+  } else if (gameState.phase === "battle") {
+    updateBattle(dt);
+  }
+
+  updateUi();
+}
+
+function updateBattle(dt) {
+  // 简化：每秒执行一次逻辑步长（累积时间）
+  const step = 0.2;
+  let acc = dt;
+  while (acc > 0) {
+    const use = Math.min(step, acc);
+    battleStep(use);
+    acc -= use;
+  }
+}
+
+function battleStep(_dt) {
+  const units = gameState.units;
+  if (!units.some((u) => u.side === PLAYER_SIDE)) {
+    endBattle(ENEMY_SIDE);
+    return;
+  }
+  if (!units.some((u) => u.side === ENEMY_SIDE)) {
+    endBattle(PLAYER_SIDE);
+    return;
+  }
+
+  // 每个单位寻找最近敌人
+  for (const unit of units) {
+    const def = UNIT_TYPES[unit.type];
+    if (!def) continue;
+
+    const enemies = units.filter((u) => u.side !== unit.side);
+    if (enemies.length === 0) continue;
+
+    let best = null;
+    let bestDist = Infinity;
+    for (const e of enemies) {
+      const dx = e.col - unit.col;
+      const dy = e.row - unit.row;
+      const dist = Math.abs(dx) + Math.abs(dy);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = e;
+      }
+    }
+
+    if (!best) continue;
+
+    if (bestDist <= def.range) {
+      // 攻击
+      best.hp -= def.attack;
+    } else {
+      // 向最近敌人靠近
+      if (Math.abs(best.col - unit.col) > Math.abs(best.row - unit.row)) {
+        unit.col += best.col > unit.col ? 1 : -1;
+      } else if (best.row !== unit.row) {
+        unit.row += best.row > unit.row ? 1 : -1;
+      }
+      unit.col = Math.max(0, Math.min(GRID_COLS - 1, unit.col));
+      unit.row = Math.max(0, Math.min(GRID_ROWS - 1, unit.row));
+    }
+  }
+
+  // 移除死亡单位
+  gameState.units = units.filter((u) => u.hp > 0);
+}
+
+function endBattle(winnerSide) {
+  gameState.phase = "result";
+  gameState.winner = winnerSide;
+  const remaining = gameState.units.filter((u) => u.side === winnerSide);
+  const totalStrength = remaining.reduce((sum, u) => {
+    const def = UNIT_TYPES[u.type];
+    return sum + (def ? def.maxHp : 0);
+  }, 0);
+  const damage = Math.round(totalStrength * 0.5);
+
+  if (winnerSide === PLAYER_SIDE) {
+    gameState.enemyHqHp -= damage;
+  } else {
+    gameState.playerHqHp -= damage;
+  }
+
+  let resultText =
+    winnerSide === PLAYER_SIDE ? "本回合胜利！" : "本回合失败...";
+  resultText += ` 敌方总部受到 ${winnerSide === PLAYER_SIDE ? damage : 0} 伤害，玩家总部受到 ${winnerSide === ENEMY_SIDE ? damage : 0} 伤害。`;
+
+  if (gameState.playerHqHp <= 0 || gameState.enemyHqHp <= 0) {
+    if (gameState.playerHqHp <= 0 && gameState.enemyHqHp <= 0) {
+      resultText += " 双方总部同时被摧毁，平局！";
+    } else if (gameState.enemyHqHp <= 0) {
+      resultText += " 敌方总部被摧毁，你赢了！";
+    } else {
+      resultText += " 我方总部被摧毁，游戏结束。";
+    }
+  } else {
+    resultText += " 点击“重开局”进入下一回合。";
+  }
+
+  messageEl.textContent = resultText;
+}
+
+function render() {
+  // 背景
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // 画网格
+  for (let r = 0; r < GRID_ROWS; r++) {
+    for (let c = 0; c < GRID_COLS; c++) {
+      const x = c * TILE_SIZE;
+      const y = r * TILE_SIZE;
+      const isPlayerZone = c <= 2;
+      const isEnemyZone = c >= 7;
+      ctx.fillStyle = isPlayerZone
+        ? "#122"
+        : isEnemyZone
+        ? "#221"
+        : "#111";
+      ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+      ctx.strokeStyle = "#333";
+      ctx.strokeRect(x, y, TILE_SIZE, TILE_SIZE);
+    }
+  }
+
+  // 画单位
+  for (const unit of gameState.units) {
+    const def = UNIT_TYPES[unit.type];
+    if (!def) continue;
+    const x = unit.col * TILE_SIZE;
+    const y = unit.row * TILE_SIZE;
+    const w = TILE_SIZE - 4;
+    const h = TILE_SIZE - 4;
+
+    ctx.fillStyle = def.color;
+    ctx.fillRect(x + 2, y + 2, w, h);
+
+    ctx.fillStyle = unit.side === PLAYER_SIDE ? "#0f0" : "#f00";
+    const hpRatio = Math.max(0, unit.hp) / def.maxHp;
+    ctx.fillRect(x + 2, y + TILE_SIZE - 4, (TILE_SIZE - 4) * hpRatio, 2);
+  }
+}
+
+// 初始化
+resetGame();
+setActiveUnit("infantry");
+updateUi();
+requestAnimationFrame(gameLoop);
