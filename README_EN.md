@@ -2,7 +2,7 @@
 
 A pixel-art auto-chess game based on Canvas, implemented with pure HTML / CSS / JavaScript, requiring no frameworks or dependencies.
 
--- Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.0-202606061436-2fbbe3a/Pixel-Tactics-War-v1.0.0.zip>
+-- Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.0/Pixel-Tactics-War-v1.0.0.zip>
 -- Online demo: <https://m0n3rt.github.io/Pixel-Tactics-War/>
 
 ---
