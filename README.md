@@ -2,6 +2,9 @@
 
 基于 Canvas 的像素风自动战棋游戏，纯 HTML / CSS / JS 实现，无需任何框架或依赖。
 
+- 源码下载：<https://github.com/m0n3rt/Pixel-Tactics-War/archive/refs/heads/main.zip>
+- 在线试玩：<https://m0n3rt.github.io/Pixel-Tactics-War/>
+
 ---
 
 ## 游戏概览

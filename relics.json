@@ -1,0 +1,373 @@
+{
+  "infantryBoots": {
+    "key": "infantryBoots",
+    "name": "步兵的靴子",
+    "price": 6,
+    "maxStacks": 3,
+    "rarity": "rare",
+    "desc": "+3%步兵移速与攻速（最多叠3层）",
+    "effects": [
+      { "type": "moveSpeedMul", "value": 0.03, "unitType": "infantry" },
+      { "type": "atkSpeedMul", "value": 0.03, "unitType": "infantry" }
+    ]
+  },
+  "archerSecondArrow": {
+    "key": "archerSecondArrow",
+    "name": "弓手的第二支箭",
+    "price": 6,
+    "maxStacks": 3,
+    "rarity": "rare",
+    "desc": "+10%弓手追加箭概率（最多叠3层）",
+    "effects": [
+      { "type": "archerExtraArrowChance", "value": 0.1, "unitType": "archer" }
+    ]
+  },
+  "ironMedal": {
+    "key": "ironMedal",
+    "name": "铁誓军章",
+    "price": 8,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "+15%重甲兵生命值",
+    "effects": [
+      { "type": "hpMul", "value": 0.15, "unitType": "tank" }
+    ]
+  },
+  "unsealedSword": {
+    "key": "unsealedSword",
+    "name": "启封的剑",
+    "price": 10,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "+2全体攻击力",
+    "effects": [
+      { "type": "atkFlat", "value": 2 }
+    ]
+  },
+  "unsealedShield": {
+    "key": "unsealedShield",
+    "name": "启封的盾",
+    "price": 10,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "+10%全体生命值",
+    "effects": [
+      { "type": "hpMul", "value": 0.1 }
+    ]
+  },
+  "unsealedBanner": {
+    "key": "unsealedBanner",
+    "name": "启封的旗帜",
+    "price": 10,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "+2部署点上限",
+    "effects": [
+      { "type": "dpCapFlat", "value": 2 }
+    ]
+  },
+  "victorySymbol": {
+    "key": "victorySymbol",
+    "name": "胜利的象征",
+    "price": 12,
+    "maxStacks": 5,
+    "rarity": "legendary",
+    "desc": "+4%全属性（集齐6件基础藏品后解锁，可叠5层）",
+    "effects": [
+      { "type": "globalAllStatsMul", "value": 0.04 }
+    ]
+  },
+  "belt": {
+    "key": "belt",
+    "name": "腰带",
+    "price": 3,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+2%步兵生命值",
+    "effects": [
+      { "type": "hpMul", "value": 0.02, "unitType": "infantry" }
+    ]
+  },
+  "bracer": {
+    "key": "bracer",
+    "name": "护腕",
+    "price": 3,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+2%弓手生命值",
+    "effects": [
+      { "type": "hpMul", "value": 0.02, "unitType": "archer" }
+    ]
+  },
+  "pauldron": {
+    "key": "pauldron",
+    "name": "肩甲",
+    "price": 3,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+2%重甲兵攻击力",
+    "effects": [
+      { "type": "atkMul", "value": 0.02, "unitType": "tank" }
+    ]
+  },
+  "mysticScabbard": {
+    "key": "mysticScabbard",
+    "name": "神秘剑鞘",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "每有2金币，全体攻速+2%（封顶30%）",
+    "effects": [
+      { "type": "atkSpeedByGold", "goldStep": 2, "stepBonus": 0.02, "cap": 0.3 }
+    ]
+  },
+  "mysticShield": {
+    "key": "mysticShield",
+    "name": "神秘盾牌",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "每有2金币，全体移速+2%（封顶30%）",
+    "effects": [
+      { "type": "moveSpeedByGold", "goldStep": 2, "stepBonus": 0.02, "cap": 0.3 }
+    ]
+  },
+  "luckyClover": {
+    "key": "luckyClover",
+    "name": "幸运草",
+    "price": 0,
+    "maxStacks": 999,
+    "rarity": "legendary",
+    "desc": "+1%全体移速与攻速（仅在集齐所有藏品后固定刷新）",
+    "effects": [
+      { "type": "moveSpeedMul", "value": 0.01 },
+      { "type": "atkSpeedMul", "value": 0.01 }
+    ]
+  },
+  "tacticalManual": {
+    "key": "tacticalManual",
+    "name": "战术手册",
+    "price": 5,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+1全体攻击力",
+    "effects": [
+      { "type": "atkFlat", "value": 1 }
+    ]
+  },
+  "legionVest": {
+    "key": "legionVest",
+    "name": "军团背心",
+    "price": 5,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+5%全体生命上限",
+    "effects": [
+      { "type": "hpMul", "value": 0.05 }
+    ]
+  },
+  "bladeCharm": {
+    "key": "bladeCharm",
+    "name": "锋刃护符",
+    "price": 4,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+8%步兵攻击力",
+    "effects": [
+      { "type": "atkMul", "value": 0.08, "unitType": "infantry" }
+    ]
+  },
+  "eaglePendant": {
+    "key": "eaglePendant",
+    "name": "鹰眼吊坠",
+    "price": 4,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+1弓手攻击距离",
+    "effects": [
+      { "type": "rangeFlat", "value": 1, "unitType": "archer" }
+    ]
+  },
+  "fortressGear": {
+    "key": "fortressGear",
+    "name": "堡垒齿轮",
+    "price": 5,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "+8%重甲移速",
+    "effects": [
+      { "type": "moveSpeedMul", "value": 0.08, "unitType": "tank" }
+    ]
+  },
+  "recruitHorn": {
+    "key": "recruitHorn",
+    "name": "征募号角",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "+1单位上限",
+    "effects": [
+      { "type": "unitCapFlat", "value": 1 }
+    ]
+  },
+  "fieldLedger": {
+    "key": "fieldLedger",
+    "name": "战地账簿",
+    "price": 6,
+    "maxStacks": 2,
+    "rarity": "epic",
+    "desc": "+1每场结算金币（最多2层）",
+    "effects": [
+      { "type": "battleGoldFlat", "value": 1 }
+    ]
+  },
+  "swiftSeal": {
+    "key": "swiftSeal",
+    "name": "急行军印章",
+    "price": 6,
+    "maxStacks": 2,
+    "rarity": "epic",
+    "desc": "+1部署点上限（最多2层）",
+    "effects": [
+      { "type": "dpCapFlat", "value": 1 }
+    ]
+  },
+  "coinPouch": {
+    "key": "coinPouch",
+    "name": "金币袋",
+    "price": 4,
+    "maxStacks": 3,
+    "rarity": "rare",
+    "desc": "购买后立刻获得5金币",
+    "effects": [
+      { "type": "instantGold", "value": 5 }
+    ]
+  },
+  "treasureMapShard": {
+    "key": "treasureMapShard",
+    "name": "宝图残页",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "下一次开箱出货率+20%",
+    "effects": [
+      { "type": "nextChestDropChanceBonus", "value": 0.2 }
+    ]
+  },
+  "discountSigil": {
+    "key": "discountSigil",
+    "name": "折扣徽记",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "下一次购买藏品-2金币",
+    "effects": [
+      { "type": "nextRelicDiscount", "value": 2 }
+    ]
+  },
+  "emergencyFund": {
+    "key": "emergencyFund",
+    "name": "应急军费",
+    "price": 5,
+    "maxStacks": 2,
+    "rarity": "rare",
+    "desc": "当前部署点+3（超出无效）",
+    "effects": [
+      { "type": "instantDp", "value": 3 }
+    ]
+  },
+  "reinforcementTag": {
+    "key": "reinforcementTag",
+    "name": "援军军牌",
+    "price": 7,
+    "maxStacks": 2,
+    "rarity": "epic",
+    "desc": "+1增援库存上限（最多2层）",
+    "effects": [
+      { "type": "reserveCapFlat", "value": 1 }
+    ]
+  },
+  "tradeContract": {
+    "key": "tradeContract",
+    "name": "商路契约",
+    "price": 7,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "骰子奖励概率+10%",
+    "effects": [
+      { "type": "diceRewardChanceBonus", "value": 0.1 }
+    ]
+  },
+  "preBattleStim": {
+    "key": "preBattleStim",
+    "name": "战前兴奋剂",
+    "price": 4,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "接下来2个攻破战斗关卡内，+10%全体攻速",
+    "durationByClearedBattles": 2,
+    "effects": [
+      { "type": "atkSpeedMul", "value": 0.1 }
+    ]
+  },
+  "fortressCrew": {
+    "key": "fortressCrew",
+    "name": "堡垒工程队",
+    "price": 5,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "接下来2个攻破战斗关卡内，我方总部受伤害-15%",
+    "durationByClearedBattles": 2,
+    "effects": [
+      { "type": "hqDamageReduction", "value": 0.15 }
+    ]
+  },
+  "huntOrder": {
+    "key": "huntOrder",
+    "name": "猎首令",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "接下来1个攻破战斗关卡内，精英/Boss战敌方生命-10%",
+    "durationByClearedBattles": 1,
+    "effects": [
+      { "type": "enemyHpDebuffEliteBoss", "value": 0.1 }
+    ]
+  },
+  "medkit": {
+    "key": "medkit",
+    "name": "战地医疗包",
+    "price": 5,
+    "maxStacks": 1,
+    "rarity": "rare",
+    "desc": "接下来3个攻破战斗关卡内，每场战后回复总部6生命",
+    "durationByClearedBattles": 3,
+    "effects": [
+      { "type": "hqRegenAfterBattle", "value": 6 }
+    ]
+  },
+  "allIn": {
+    "key": "allIn",
+    "name": "孤注一掷",
+    "price": 6,
+    "maxStacks": 1,
+    "rarity": "epic",
+    "desc": "接下来1个攻破战斗关卡内，+20%攻击且-12%生命",
+    "durationByClearedBattles": 1,
+    "effects": [
+      { "type": "atkMul", "value": 0.2 },
+      { "type": "hpMul", "value": -0.12 }
+    ]
+  },
+  "reviveSpark": {
+    "key": "reviveSpark",
+    "name": "复苏火种",
+    "price": 8,
+    "maxStacks": 1,
+    "rarity": "legendary",
+    "desc": "总部将被击破时保留1点生命（一次）",
+    "effects": [
+      { "type": "hqReviveOnce", "value": 1, "perStack": false }
+    ]
+  }
+}

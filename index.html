@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <title>像素战棋</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260407" />
 </head>
 <body>
+
+  <div id="global-gold-badge" class="gold-badge">💎 0</div>
 
   <!-- ===== 首页 ===== -->
   <div id="title-screen">
@@ -16,8 +18,58 @@
       <p class="subtitle">PIXEL TACTICS</p>
       <div class="title-menu">
         <button id="btn-start-game" class="big-btn">开始游戏</button>
+        <button id="btn-codex" class="codex-btn">📖 图鉴</button>
       </div>
       <p class="tip-text">布阵 → 开战 → 摧毁敌方总部</p>
+    </div>
+  </div>
+
+  <!-- ===== 图鉴（独立界面） ===== -->
+  <div id="codex-screen" class="hidden">
+    <div class="codex-panel" aria-label="图鉴">
+      <div class="codex-title">📖 图鉴</div>
+      <div class="codex-subtitle">快速查看所有兵种外观示意 / 占格 / 基础属性（实际对局会受增益、难度等影响）</div>
+      <div id="codex-units" class="codex-units" aria-label="兵种图鉴列表"></div>
+      <button id="btn-back-title-from-codex" class="small-btn">返回首页</button>
+    </div>
+  </div>
+
+  <!-- ===== 难度选择 ===== -->
+  <div id="difficulty-screen" class="hidden">
+    <div class="difficulty-content">
+      <div class="difficulty-title">⚔ 选择难度 ⚔</div>
+      <p class="difficulty-hint">使用鼠标滚轮或点击调整难度等级</p>
+      
+      <div class="difficulty-selector">
+        <button id="diff-prev" class="diff-arrow">◀</button>
+        <div class="difficulty-display">
+          <div class="diff-level-num" id="diff-level">3</div>
+          <div class="diff-level-text" id="diff-text">标准难度</div>
+        </div>
+        <button id="diff-next" class="diff-arrow">▶</button>
+      </div>
+      
+      <div class="difficulty-stats">
+        <div class="diff-stat-row">
+          <span class="diff-stat-label">敌人属性加成：</span>
+          <span class="diff-stat-value" id="enemy-bonus">+0%</span>
+        </div>
+        <div class="diff-stat-row">
+          <span class="diff-stat-label">Boss属性加成：</span>
+          <span class="diff-stat-value" id="boss-bonus">+0%</span>
+        </div>
+        <div class="diff-stat-row diff-extra-row hidden" id="diff-starter-row">
+          <span class="diff-stat-label">难度机制：</span>
+          <span class="diff-stat-value diff-extra-value" id="diff-starter-info">获得初始增益选择</span>
+        </div>
+        <div class="diff-stat-row diff-extra-row hidden" id="diff-tower-row">
+          <span class="diff-stat-label">炮台机制：</span>
+          <span class="diff-stat-value diff-extra-value" id="diff-tower-info">从第三张地图开始，敌方获得逐渐增强的炮台支援</span>
+        </div>
+      </div>
+      
+      <button id="btn-start-game-confirm" class="big-btn">确认开始</button>
+      <button id="btn-back-to-title" class="small-btn">返回</button>
     </div>
   </div>
 
@@ -29,11 +81,142 @@
     </div>
   </div>
 
+  <!-- ===== 回合结束奖励选择 ===== -->
+  <div id="reward-screen" class="hidden">
+    <div class="reward-content">
+      <div class="reward-title" id="reward-title">🎁 选择你的奖励</div>
+      <p class="reward-hint" id="reward-hint">选择一项增益来强化你的军队</p>
+      <div id="reward-options" class="reward-grid"></div>
+    </div>
+  </div>
+
+  <!-- ===== 路线选择地图 ===== -->
+  <div id="map-screen" class="hidden">
+    <div class="map-content">
+      <div class="map-header">
+        <div class="map-title" id="map-title">🗺 选择你的路线</div>
+        <div class="map-progress">
+          <span>当前进度：</span>
+          <span id="map-progress-text">第 1/10 关</span>
+        </div>
+        <button id="btn-stats-map" class="ctrl-btn stats-btn-bar map-stats-btn">📊 增益/藏品</button>
+      </div>
+      <div class="map-scroll-wrapper" id="map-scroll-wrapper">
+        <div class="map-inner" id="map-inner"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 事件节点 ===== -->
+  <div id="event-screen" class="hidden">
+    <div class="event-content">
+      <div class="event-title" id="event-title">🎭 随机事件</div>
+      <div class="event-description" id="event-description"></div>
+      <div id="event-choices" class="event-choices"></div>
+      <div class="event-stats-row">
+        <button id="btn-stats-event" class="ctrl-btn stats-btn-bar">📊 增益/藏品</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 事件结果弹窗 ===== -->
+  <div id="event-result-overlay" class="hidden">
+    <div class="event-result-box">
+      <div class="event-result-title" id="event-result-title">事件结果</div>
+      <div class="event-result-text" id="event-result-text"></div>
+      <div class="event-result-actions">
+        <button id="event-result-confirm" class="ctrl-btn blue-btn">继续</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 战斗结果弹窗 ===== -->
+  <div id="battle-result-overlay" class="hidden">
+    <div class="event-result-box battle-result-box">
+      <div class="event-result-title" id="battle-result-title">战斗结果</div>
+      <div class="event-result-text" id="battle-result-text"></div>
+      <div class="event-result-actions">
+        <button id="battle-result-close" class="ctrl-btn blue-btn">知道了</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 通关庆祝 ===== -->
+  <div id="victory-screen" class="hidden">
+    <div class="victory-content">
+      <div class="victory-title">🏆 通关成功！</div>
+      <div class="victory-subtitle">荣耀属于你，指挥官。</div>
+      <div id="victory-stats" class="victory-stats" aria-label="通关统计"></div>
+      <button id="btn-victory-back-title" class="big-btn">返回首页</button>
+    </div>
+  </div>
+
+  <!-- ===== 商店节点 ===== -->
+  <div id="shop-screen" class="hidden">
+    <div class="shop-content">
+      <div class="shop-header">
+        <div class="shop-title">🏪 营火商店</div>
+        <div class="shop-gold">金币：<span id="shop-gold-text">0</span></div>
+      </div>
+      <div class="shop-grid">
+        <div class="shop-card" id="shop-relic-card">
+          <div class="shop-card-title">📦 藏品栏位</div>
+          <div class="shop-card-desc">打开宝箱，可能出现稀有藏品</div>
+          <button id="shop-open-chest" class="ctrl-btn blue-btn">开启宝箱</button>
+          <div class="shop-chest-progress" id="shop-chest-progress" aria-label="宝箱开启次数进度"></div>
+          <div id="shop-relic-offer" class="shop-offer-text">尚未开启</div>
+          <div class="shop-actions">
+            <button id="shop-buy-relic" class="ctrl-btn green-btn" disabled>购买</button>
+            <button id="shop-keep-relic" class="ctrl-btn amber-btn" disabled>保留</button>
+            <button id="shop-discard-relic" class="ctrl-btn" disabled>丢弃</button>
+          </div>
+        </div>
+        <div class="shop-card" id="shop-heal-card">
+          <div class="shop-card-title">🔥 回复城堡</div>
+          <div class="shop-card-desc">点燃篝火，回复我方城堡生命到上限</div>
+          <button id="shop-heal-btn" class="ctrl-btn green-btn">点燃篝火</button>
+          <div id="shop-heal-info" class="shop-offer-text"></div>
+        </div>
+        <div class="shop-card" id="shop-dice-card">
+          <div class="shop-card-title">🎲 挑战与机遇</div>
+          <div class="shop-card-desc">50%奖励，50%惩罚，每次商店仅可触发一次</div>
+          <button id="shop-dice-btn" class="ctrl-btn blue-btn">掷骰子</button>
+          <div id="shop-dice-info" class="shop-offer-text"></div>
+        </div>
+      </div>
+      <div id="shop-decision-overlay" class="shop-decision-overlay hidden">
+        <div class="shop-decision-box">
+          <div class="shop-decision-title" id="shop-decision-title">确认选择</div>
+          <div class="shop-decision-text" id="shop-decision-text"></div>
+          <div class="shop-decision-actions">
+            <button id="shop-decision-confirm" class="ctrl-btn amber-btn">确认</button>
+            <button id="shop-decision-cancel" class="ctrl-btn">取消</button>
+          </div>
+        </div>
+      </div>
+      <div class="shop-bottom">
+        <button id="shop-leave-btn" class="ctrl-btn amber-btn">离开商店</button>
+        <button id="btn-stats-shop" class="ctrl-btn stats-btn-bar">📊 增益/藏品</button>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== 回合提示横幅 ===== -->
   <div id="round-banner" class="hidden">
     <div class="banner-text">
       <div class="round-number" id="round-number-text"></div>
       <div class="round-hint">请部署你的战棋！</div>
+    </div>
+  </div>
+
+  <!-- ===== 增益/藏品总览面板 ===== -->
+  <div id="stats-panel" class="hidden">
+    <div class="stats-panel-box">
+      <div class="stats-panel-header">
+        <span class="stats-panel-title">📊 增益 / 藏品总览</span>
+        <button id="stats-close-btn" class="stats-close">✕ 关闭</button>
+      </div>
+      <div class="stats-panel-body" id="stats-panel-body"></div>
     </div>
   </div>
 
@@ -45,6 +228,7 @@
       <p class="pause-hint">按 P 或点击下方按钮继续</p>
       <div class="pause-btns">
         <button id="btn-resume" class="pause-btn resume-btn">▶ 继续游戏</button>
+        <button id="btn-stats-pause" class="pause-btn stats-btn">📊 增益/藏品</button>
         <button id="btn-quit" class="pause-btn quit-btn">✕ 退出游戏</button>
       </div>
     </div>
@@ -77,15 +261,36 @@
       </div>
 
       <div class="center-strip">
-        <div class="phase-badge" id="phase-badge">准备阶段</div>
-        <div class="info-row">
-          <span>回合 <strong id="round-display">1</strong></span>
-          <span class="sep">|</span>
-          <span id="countdown-wrap">⏱ <span id="countdown">60</span>s</span>
-          <span class="sep">|</span>
-          <span id="points-wrap">🪙 <span id="deploy-points">20</span></span>
+        <div class="info-left">
+          <div class="info-item">
+            <div class="info-label">⚔️回合数</div>
+            <div class="info-value" id="round-display">1</div>
+          </div>
+          <div class="info-item" id="countdown-wrap">
+            <div class="info-label">🕰️倒计时</div>
+            <div class="info-value"><span id="countdown">60</span>s</div>
+          </div>
         </div>
-        <div class="army-summary" id="army-summary"></div>
+        
+        <div class="phase-badge-center">
+          <div class="phase-badge" id="phase-badge">准备阶段</div>
+          <div class="army-summary" id="army-summary"></div>
+        </div>
+        
+        <div class="info-right">
+          <div class="info-item" id="gold-wrap">
+            <div class="info-label">💎金币</div>
+            <div class="info-value" id="gold-display">0</div>
+          </div>
+          <div class="info-item" id="points-wrap">
+            <div class="info-label">🪙点数</div>
+            <div class="info-value" id="deploy-points">10</div>
+          </div>
+          <div class="info-item" id="unit-cap-wrap">
+            <div class="info-label">♟️棋子数</div>
+            <div class="info-value"><span id="unit-count">0</span>/<span id="unit-cap">6</span></div>
+          </div>
+        </div>
       </div>
 
       <div class="hq-panel enemy-side">
@@ -100,7 +305,18 @@
 
     <!-- 主区域：画布 + 右侧日志 -->
     <div class="game-area">
-      <canvas id="game-canvas"></canvas>
+      <div id="reinforcement-reserve" class="reserve-panel reserve-panel-side">
+        <div class="reserve-panel-header">
+          <span>🎁 增援库存</span>
+          <span id="reinforcement-reserve-count">0/3</span>
+        </div>
+        <div id="reinforcement-reserve-body" class="reserve-slots"></div>
+      </div>
+      <div id="battle-stage" class="battle-stage">
+        <div id="three-stage" class="three-stage" aria-label="3D 战场"></div>
+        <div id="three-overlay" class="three-overlay" aria-hidden="true"></div>
+        <canvas id="game-canvas" class="legacy-canvas"></canvas>
+      </div>
       <div id="unit-tooltip" class="hidden"></div>
       <div id="battle-log" class="side-log">
         <div class="log-header">📜 战斗日志</div>
@@ -111,6 +327,9 @@
     <!-- 底部控制栏 -->
     <div class="control-bar">
       <div class="ctrl-group deploy-group" id="deploy-controls">
+        <button id="btn-redeploy" class="ctrl-btn blue-btn" title="一键重复上回合部署">🔁 一键再部署</button>
+        <button id="btn-clear-deploy" class="ctrl-btn amber-btn" title="移除全部我方已部署单位">🧹 清空部署</button>
+        <div class="ctrl-sep"></div>
         <button data-unit="infantry" class="unit-btn"><kbd>1</kbd> 步兵<span class="cost-tag">①</span></button>
         <button data-unit="archer"   class="unit-btn"><kbd>2</kbd> 弓手<span class="cost-tag">②</span></button>
         <button data-unit="tank"     class="unit-btn"><kbd>3</kbd> 重甲<span class="cost-tag">③</span></button>
@@ -124,6 +343,13 @@
         <button id="btn-play-again" class="ctrl-btn green-btn hidden">再来一局</button>
         <button id="btn-back-title" class="ctrl-btn amber-btn hidden">主界面</button>
       </div>
+      <div class="ctrl-sep"></div>
+      <div class="ctrl-group">
+        <button id="btn-zoom-out" class="ctrl-btn" title="缩小镜头">－ 缩小</button>
+        <button id="btn-zoom-in" class="ctrl-btn" title="放大镜头">＋ 放大</button>
+        <button id="btn-3d-view" class="ctrl-btn" title="重置3D镜头到默认观察角度">🧭 重置镜头</button>
+        <button id="btn-stats" class="ctrl-btn stats-btn-bar" title="查看当前增益与藏品（任意阶段可用）">📊 增益/藏品</button>
+      </div>
     </div>
 
     <!-- 底部信息区 -->
@@ -131,8 +357,10 @@
       <div id="message" class="message-area"></div>
     </div>
 
+    <div id="floating-tip" class="floating-tip hidden"></div>
+
   </div>
 
-  <script src="main.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
