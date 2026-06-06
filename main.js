@@ -281,11 +281,12 @@ canvas.height = ROWS * TILE;
 ctx.imageSmoothingEnabled = false;
 
 function fitCanvas() {
-  const sideGap = window.innerWidth > 1180 ? 36 : 16;
+  const compactLayout = window.innerWidth <= 920;
+  const sideGap = compactLayout ? 10 : 36;
   const logW = window.innerWidth > 1180 ? 180 : 0;
   const reserveW = window.innerWidth > 1180 ? 156 : 0;
   const maxW = window.innerWidth - 20 - logW - reserveW - sideGap;
-  const maxH = window.innerHeight - 180;
+  const maxH = window.innerHeight - (compactLayout ? 260 : 180);
   const r = canvas.width / canvas.height;
   let w = maxW, h = w / r;
   if (h > maxH) { h = maxH; w = h * r; }
