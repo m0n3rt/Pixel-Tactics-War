@@ -22,7 +22,7 @@
 body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:
    radial-gradient(circle at top left,rgba(76,102,158,.16),transparent 32%),
    radial-gradient(circle at 85% 12%,rgba(255,218,114,.12),transparent 18%),
-   linear-gradient(180deg,#090b12 0%,#07080d 100%);color:var(--text);min-height:100vh;overflow:hidden;user-select:none;position:relative}
+   linear-gradient(180deg,#090b12 0%,#07080d 100%);color:var(--text);min-height:100vh;overflow:hidden;user-select:none;position:relative;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);background-size:72px 72px;opacity:.18;pointer-events:none;mix-blend-mode:screen}
 .hidden{display:none!important}
 .gold-badge{position:fixed;right:14px;top:12px;z-index:130;background:rgba(12,16,24,.92);border:1px solid rgba(255,218,114,.3);color:var(--accent);padding:7px 12px;border-radius:999px;font-size:14px;font-weight:bold;letter-spacing:.4px;box-shadow:var(--shadow-soft);backdrop-filter:blur(10px)}
@@ -363,6 +363,7 @@ filter:blur(8px);opacity:.55;mix-blend-mode:screen;animation:embers 1.15s linear
 .battle-stage{position:relative;display:flex;align-items:center;justify-content:center;flex:0 0 auto;border:1px solid var(--line);background:#000;box-shadow:var(--shadow);overflow:hidden;border-radius:2px}
 .three-stage{display:none;width:100%;height:100%;position:relative;background:radial-gradient(circle at 30% 10%,#1a2234 0%,#080a12 62%,#05060a 100%)}
 .three-stage canvas{display:block;width:100%!important;height:100%!important;outline:none}
+.battle-stage,.three-stage canvas,#game-canvas{touch-action:none}
 .three-overlay{display:none;position:absolute;inset:0;pointer-events:none;z-index:3}
 #game-canvas.legacy-canvas{display:block;image-rendering:pixelated;border:0;background:#000;flex:0 0 auto;align-self:center;box-shadow:none}
 body.three-ready .three-stage{display:block}
@@ -437,3 +438,53 @@ body.three-ready #game-canvas.legacy-canvas{display:none}
 .log-atk{color:#f88}.log-kill{color:#fa0}.log-move{color:#8cf}
 @media(max-width:1180px){.game-area{flex-wrap:wrap;align-content:flex-start}.reserve-panel-side{order:1;width:min(100%,520px);flex:1 1 100%}.reserve-slots{grid-template-columns:repeat(3,1fr)}.reserve-slot,.reserve-slot-empty{min-height:54px}.battle-stage{order:2}.side-log{order:3;flex:1 1 100%;width:min(100%,520px)}}
 @media(max-width:920px){.bottom-panel{flex-direction:column;align-items:stretch}.control-bar{gap:6px}.top-bar{flex-direction:column}.center-strip{order:3;flex-wrap:wrap}.hq-panel{min-width:0;justify-content:center}.game-area{padding:8px;overflow:auto;align-items:flex-start}.side-log,.reserve-panel-side{width:100%;flex:1 1 100%}}
+
+@media (max-width: 760px){
+   #ui-root{padding:6px;gap:6px}
+   .top-bar{gap:6px}
+   .hq-panel,.center-strip,.control-bar,.bottom-panel,.reserve-panel,.side-log{border-radius:10px}
+   .hq-panel{padding:7px 10px;gap:6px}
+   .hq-icon{font-size:22px}
+   .hq-name{font-size:10px}
+   .hq-hp-text{font-size:13px}
+   .info-left,.info-right{gap:12px;padding:0}
+   .info-item{min-width:52px}
+   .info-label{font-size:10px}
+   .info-value{font-size:16px}
+   .phase-badge{font-size:14px;letter-spacing:2px;padding:5px 12px}
+   .army-summary{font-size:10px}
+   .control-bar{padding:6px 0 1px;gap:5px}
+   .unit-btn,.ctrl-btn{padding:6px 11px;font-size:12px;border-radius:9px}
+   .bottom-panel{gap:8px}
+   .message-area{font-size:12px}
+   .reserve-panel{padding:8px}
+   .reserve-panel-header{margin-bottom:6px}
+   .reserve-slot,.reserve-slot-empty{min-height:48px}
+   .side-log .log-header{padding:5px 8px}
+   .side-log .log-body{padding:4px 7px}
+   .floating-tip{bottom:72px;max-width:92vw;font-size:12px}
+}
+
+@media (max-width: 560px){
+   .gold-badge{font-size:12px;padding:6px 10px}
+   .title-content,.difficulty-content,.reward-content,.event-content,.shop-content,.victory-content,.pause-content,.confirm-box,.stats-panel-box{width:min(94vw,720px);padding-left:14px;padding-right:14px}
+   .game-title{font-size:44px;letter-spacing:6px}
+   .subtitle{font-size:14px;letter-spacing:8px}
+   .big-btn{width:100%;padding:13px 18px;font-size:17px;letter-spacing:4px}
+   .codex-btn,.small-btn{width:100%;padding:10px 14px}
+   .difficulty-title,.reward-title,.event-title,.shop-title,.victory-title{font-size:26px;letter-spacing:2px}
+   .difficulty-selector{gap:12px}
+   .difficulty-display{min-width:120px}
+   .diff-level-num{font-size:56px}
+   .diff-level-text{font-size:14px;letter-spacing:2px}
+   .reward-grid,.shop-grid{grid-template-columns:1fr}
+   .map-content,.shop-content{gap:8px}
+   .map-title{font-size:24px;letter-spacing:2px}
+   .event-description{font-size:14px}
+   .pause-label{font-size:26px;letter-spacing:4px}
+   .pause-btns,.shop-actions,.shop-bottom,.confirm-btns,.event-result-actions{gap:8px;flex-direction:column}
+   .pause-btn,.ctrl-btn{width:100%;justify-content:center}
+   .stats-relic-grid{grid-template-columns:1fr}
+   .map-node{width:48px;height:48px}
+   .map-layer-label{font-size:10px}
+}
