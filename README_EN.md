@@ -1,7 +1,8 @@
 
 A pixel-art auto-chess game based on Canvas, implemented with pure HTML / CSS / JavaScript, requiring no frameworks or dependencies.
 
-- Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.2/Pixel-Tactics-War-v1.0.2.zip>
+- Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip>
+- Online demo: <https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3>
 
 
 ## Game Overview
@@ -146,9 +147,13 @@ When hovering over any unit, a floating information card displays:
 
 ```
 Pixel-Tactics-War/
-├── index.html      # Page structure (home/loading/banner/pause/confirm/game UI)
-├── style.css       # Complete styling (~120 lines, animations/status bar/controls/pause/log/confirm)
-├── main.js         # All game logic (~790 lines, rendering/battle/particles/UI/pause/speed/log)
+├── index.html      # Page structure and game entry point
+├── style.css       # Styling and responsive layout
+├── src/            # Modular game logic (data, state, combat, flow, and Three.js view)
+├── vendor/         # Three.js and OrbitControls
+├── relics.json     # Relic configuration
+├── PureHtml/       # Single-file HTML backup
+├── backup/         # Refactoring helper scripts and exports
 ├── package.json    # Optional local server configuration
 ├── README.md       # Chinese version documentation
 ├── README_EN.md    # English version documentation (this file)

@@ -2,8 +2,8 @@
 
 基于 Canvas 的像素风自动战棋游戏，纯 HTML / CSS / JS 实现，无需任何框架或依赖。
 
-- 源码下载：<https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.2/Pixel-Tactics-War-v1.0.2.zip>
-- 在线试玩：<https://m0n3rt.github.io/Pixel-Tactics-War/>
+- 源码下载：<https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip>
+- 在线试玩：<https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3>
 
 ---
 
@@ -148,10 +148,14 @@
 ## 文件结构
 
 ```
-pixel-tactics/
-├── index.html    # 页面结构（首页/加载/横幅/暂停弹窗/确认弹窗/游戏UI）
-├── style.css     # 完整样式（~120行，首页动画/状态栏/控制栏/暂停弹窗/右侧日志/确认对话框）
-├── main.js       # 全部游戏逻辑（~790行，渲染/战斗/粒子/UI/暂停/变速/日志）
+Pixel-Tactics-War/
+├── index.html    # 页面结构与游戏入口
+├── style.css     # 页面样式与响应式布局
+├── src/          # 模块化游戏逻辑（数据、状态、战斗、流程与 Three.js 视图）
+├── vendor/       # Three.js 与 OrbitControls
+├── relics.json   # 藏品配置
+├── PureHtml/     # 单文件 HTML 备份
+├── backup/       # 重构辅助脚本与导出文件
 ├── package.json  # 可选本地服务器配置
 └── README.md     # 本文件
 ```
