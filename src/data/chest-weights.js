@@ -1,0 +1,37 @@
+// 参与「集齐基础藏品后解锁胜利的象征」判定的基础藏品（仍为最初的6件）
+export const BASE_RELIC_KEYS = ['infantryBoots', 'archerSecondArrow', 'ironMedal', 'unsealedSword', 'unsealedShield', 'unsealedBanner'];
+
+// 商店宝箱内各藏品的抽取权重（不含胜利的象征）
+export const CHEST_RELIC_WEIGHTS = {
+  infantryBoots: 10,
+  archerSecondArrow: 10,
+  ironMedal: 8,
+  unsealedSword: 7,
+  unsealedShield: 7,
+  unsealedBanner: 7,
+  belt: 12,
+  bracer: 12,
+  pauldron: 12,
+  mysticScabbard: 8,
+  mysticShield: 8,
+  tacticalManual: 9,
+  legionVest: 9,
+  bladeCharm: 9,
+  eaglePendant: 9,
+  fortressGear: 9,
+  recruitHorn: 7,
+  fieldLedger: 7,
+  swiftSeal: 7,
+  coinPouch: 10,
+  treasureMapShard: 7,
+  discountSigil: 7,
+  emergencyFund: 8,
+  reinforcementTag: 6,
+  tradeContract: 6,
+  preBattleStim: 8,
+  fortressCrew: 8,
+  huntOrder: 6,
+  medkit: 8,
+  allIn: 6,
+  reviveSpark: 4,
+};
