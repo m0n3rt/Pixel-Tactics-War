@@ -56,9 +56,15 @@ export function tickCombat(gs, dt){
     const atkCd = u.atkCD * (1 + (u.slowTimer>0 ? u.slowFactor : 0));
 
     let best=null,bDist=Infinity;
-    for(const e of us){if(e.side===u.side||e.hp<=0)continue;
+    const targets = us.filter(e => e.side !== u.side && e.hp > 0);
+    const inRangeTargets = u.type === 'archer'
+      ? targets.filter(e => manhattanBetweenUnits(u, e) <= u.range)
+      : [];
+    const candidates = inRangeTargets.length > 0 ? inRangeTargets : targets;
+    for(const e of candidates){
       const dist=manhattanBetweenUnits(u, e);
-      if(dist<bDist){bDist=dist;best=e;}}
+      if(dist<bDist){bDist=dist;best=e;}
+    }
     if(!best)continue;
 
     if(bDist<=u.range){
