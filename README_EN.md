@@ -1,5 +1,5 @@
 
-A pixel-art auto-chess game based on Canvas, implemented with pure HTML / CSS / JavaScript, requiring no frameworks or dependencies.
+A pixel-art Roguelike tactics game built with native HTML / CSS / JavaScript and Three.js, requiring no build tool.
 
 - Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip>
 - Online demo: <https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3>
@@ -7,9 +7,21 @@ A pixel-art auto-chess game based on Canvas, implemented with pure HTML / CSS / 
 
 ## Game Overview
 
-- **Mode**: PVE — Player vs Simple AI
-- **Flow**: Home Screen → Loading Transition → Round Banner → Preparation Phase (Deploy 60s) → Auto Battle → Round Settlement → Loop / Game Over
-- **Victory Condition**: Destroy the enemy headquarters (HP reaches zero)
+- **Mode**: PVE — Player versus progressively stronger enemy AI
+- **Flow**: Difficulty Selection → Route Map → Events → Deployment Battle → Rewards/Shop → Boss Battles → Victory
+- **Map**: 10 maps with multiple selectable nodes
+- **Node Types**: Battle, Elite Battle, Random Event, Camp Shop, and Boss Battle
+- **Victory Condition**: Complete the route and defeat the final Boss
+
+### Main Systems
+
+- **Difficulty levels**: 1–10. Enemy and Boss bonuses increase with difficulty; higher levels add enemy tower support from Map 3.
+- **Route map**: Choose the next reachable encounter, balancing risk and rewards.
+- **Battle rewards**: Pick one random blessing after battles to improve attack, HP, speed, deployment points, unit capacity, or a unit type.
+- **Random events**: Choose between event branches to gain resources, blessings, or risks.
+- **Camp shop**: Spend gold on relic chests, restore HQ health, or trigger one challenge dice roll.
+- **Relics**: Relics provide persistent effects, battle triggers, and special mechanics. The stats panel shows active blessings and relic stacks.
+- **Boss battles**: Boss encounters use dedicated pools and difficulty bonuses.
 
 ---
 
@@ -60,6 +72,11 @@ A pixel-art auto-chess game based on Canvas, implemented with pure HTML / CSS / 
 | Screen | Description |
 |---|---|
 | Home | Title gradient animation + floating sword icon + "Start Game" button |
+| Difficulty Selection | Levels 1–10, enemy/Boss bonuses, and special mechanics |
+| Route Map | Map progress and selectable battle/event/shop/Boss nodes |
+| Random Event | Event description and branching choices |
+| Camp Shop | Relic chests, HQ healing, and challenge dice |
+| Blessings/Relics | Overview of all active bonuses and relic stacks |
 | Loading | Spinning spinner + "Preparing Battlefield...", 1.2 seconds |
 | Round Banner | "Round N" pop-up with scale animation, 1.8 seconds |
 | Preparation | Chessboard + deploy operations + 60-second countdown |
@@ -83,6 +100,7 @@ A pixel-art auto-chess game based on Canvas, implemented with pure HTML / CSS / 
 - **Floating Banner**: Dynamic flag on castle roof (sine wave animation)
 - **Hit Flash**: Red flashing overlay when HQ is hit
 - **Unit Rendering**: Each unit type with unique shape + type character (步/弓/甲) + faction border (green=player/red=enemy) + health bar
+- **Three.js View**: 3D battlefield, unit and HQ models, camera zoom, rotation, and reset controls
 - **Deploy Zone**: Player's zone pulses with highlight during preparation phase + "Player Zone"/"Enemy Zone" text labels
 - **Hover Highlight**: Border highlight on mouse-hovering cell
 
@@ -141,6 +159,12 @@ When hovering over any unit, a floating information card displays:
 
 - During battle phase, toggle **1× / 2× / 3×** speed in the bottom bar
 
+### 3D Camera
+
+- Drag to rotate the view and use the mouse wheel to zoom.
+- Click “Reset Camera” to restore the default angle.
+- Click “Zoom” to adjust the battlefield distance.
+
 ---
 
 ## File Structure
@@ -174,20 +198,27 @@ Alternatively, right-click `index.html` in VS Code → "Open With Live Server".
 
 ```pwsh
 cd Pixel-Tactics-War
-npm install
 npm run serve
 ```
+
+You can also open `index.html` directly or use Live Server in VS Code. All runtime dependencies are included in the repository, so `npm install` is not required.
+
+---
+
+## Current Version
+
+- **Version**: v1.0.3
+- **Source package**: [Download v1.0.3](https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip)
+- **Online demo**: [GitHub Pages](https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3)
+- **Release history**: [GitHub Releases](https://github.com/m0n3rt/Pixel-Tactics-War/releases)
 
 ---
 
 ## Future Expansion Ideas
 
 - More unit types (Healer, Artillery, Summoner, etc.)
-- More complex AI deployment and battle strategies
 - Terrain system (grass slows, high ground increases attack, etc.)
-- Inter-round shop / upgrade system
 - Pixel art assets and frame animations (walking, attacking, idle)
-- Multi-round campaign mode
 - Sound effects and BGM
 - Difficulty selection
 - Roguelike mechanics with shop system
