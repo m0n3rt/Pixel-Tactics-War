@@ -2,8 +2,8 @@
 
 基于原生 HTML / CSS / JavaScript 与 Three.js 的像素风 Roguelike 战棋游戏，无需构建工具。
 
-- 源码下载：<https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip>
-- 在线试玩：<https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3>
+- 源码下载：<https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.4/Pixel-Tactics-War-v1.0.4.zip>
+- 在线试玩：<https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.4>
 
 ---
 
@@ -207,9 +207,9 @@ npm run serve
 
 ## 当前版本
 
-- **版本**：v1.0.3
-- **源码包**：[下载 v1.0.3](https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip)
-- **在线试玩**：[GitHub Pages](https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3)
+- **版本**：v1.0.4
+- **源码包**：[下载 v1.0.4](https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.4/Pixel-Tactics-War-v1.0.4.zip)
+- **在线试玩**：[GitHub Pages](https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.4)
 - **更新记录**：[GitHub Releases](https://github.com/m0n3rt/Pixel-Tactics-War/releases)
 
 ## 后续可扩展方向

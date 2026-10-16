@@ -1,8 +1,8 @@
 
 A pixel-art Roguelike tactics game built with native HTML / CSS / JavaScript and Three.js, requiring no build tool.
 
-- Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip>
-- Online demo: <https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3>
+- Source download: <https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.4/Pixel-Tactics-War-v1.0.4.zip>
+- Online demo: <https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.4>
 
 
 ## Game Overview
@@ -207,9 +207,9 @@ You can also open `index.html` directly or use Live Server in VS Code. All runti
 
 ## Current Version
 
-- **Version**: v1.0.3
-- **Source package**: [Download v1.0.3](https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.3/Pixel-Tactics-War-v1.0.3.zip)
-- **Online demo**: [GitHub Pages](https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.3)
+- **Version**: v1.0.4
+- **Source package**: [Download v1.0.4](https://github.com/m0n3rt/Pixel-Tactics-War/releases/download/v1.0.4/Pixel-Tactics-War-v1.0.4.zip)
+- **Online demo**: [GitHub Pages](https://m0n3rt.github.io/Pixel-Tactics-War/?v=1.0.4)
 - **Release history**: [GitHub Releases](https://github.com/m0n3rt/Pixel-Tactics-War/releases)
 
 ---
